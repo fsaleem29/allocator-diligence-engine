@@ -169,14 +169,16 @@ def call_openai(prompt, model, api_key):
 with st.sidebar:
     st.header("Settings")
 
-   api_key = st.secrets.get("OPENAI_API_KEY", "")
+    # Use Streamlit secret if deployed
+    api_key = st.secrets.get("OPENAI_API_KEY", "")
 
-if not api_key:
-    api_key = st.sidebar.text_input(
-        "OpenAI API Key",
-        type="password",
-        help="For local testing only."
-    )
+    # Fallback for local testing
+    if not api_key:
+        api_key = st.text_input(
+            "OpenAI API Key",
+            type="password",
+            help="For local testing only."
+        )
 
     model = st.text_input(
         "Model",
@@ -186,9 +188,10 @@ if not api_key:
 
     st.markdown("---")
     st.markdown("### Demo guidance")
-    st.write("Use fictional/public materials only. Do not upload confidential manager materials or work documents.")
-
-
+    st.write(
+        "Use fictional/public materials only. "
+        "Do not upload confidential manager documents or internal work materials."
+    )
 # -----------------------------
 # Main input area
 # -----------------------------
