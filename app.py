@@ -169,10 +169,13 @@ def call_openai(prompt, model, api_key):
 with st.sidebar:
     st.header("Settings")
 
-    api_key = st.text_input(
+   api_key = st.secrets.get("OPENAI_API_KEY", "")
+
+if not api_key:
+    api_key = st.sidebar.text_input(
         "OpenAI API Key",
         type="password",
-        help="Your key is used only in this local app session."
+        help="For local testing only."
     )
 
     model = st.text_input(
